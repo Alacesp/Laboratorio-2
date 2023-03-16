@@ -6,6 +6,9 @@ package org.mps.deque;
  * The previous and next of the first and last node of the deque is {@code null}.
  *
  * @param <T> the type of elements held in the deque.
+ *
+ * @author Alvaro Acedo Espejo
+ * @author Jose Torres Postigo
  */
 class DequeNode<T> {
     private T item;
