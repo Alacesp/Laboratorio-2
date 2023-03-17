@@ -41,6 +41,8 @@ import static org.junit.jupiter.api.Assertions.*;
         Get last node value
             13. in a empty Deque -> Throws exception
             14. in a Deque returns the last value
+
+
    Cases for the complex functions
         Using get()
             15. with incorrect index (below 0) -> Thows exception
@@ -54,7 +56,7 @@ import static org.junit.jupiter.api.Assertions.*;
             21. if the value is not in the list -> nothing happens
         Using sort()
             22. with an empty list -> Throws exception
-            21. with a one-node deque -> returns the deque
+            21. with a one-node deque -> Throws exception
             22. with an ordinary deque -> returns the deque in order
 
 */
