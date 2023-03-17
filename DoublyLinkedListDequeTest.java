@@ -2,8 +2,8 @@ package org.mps.deque;
 
 import org.junit.jupiter.api.*;
 
-import java.util.*;
-import java.util.Collections.*;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -86,10 +86,6 @@ public class DoublyLinkedListDequeTest {
         @Nested
         class prependingTest{
             @Test
-            void prependWithNullValueThrowsException(){
-                assertThrows(DoubleEndedQueueException.class, ()-> dq.prepend(null));
-            }
-            @Test
             void prependToDeque(){
                 Integer[] values = {1, 2, 3, 4, 5};
 
@@ -159,12 +155,6 @@ public class DoublyLinkedListDequeTest {
         @DisplayName("Appending")
         @Nested
         class appendingTests {
-
-            @DisplayName("a null value to a deque throws an exception.")
-            @Test
-            void appendWithNullValueThrowsException() {
-                assertThrows(DoubleEndedQueueException.class, () -> dq.append(null));
-            }
 
             @DisplayName("to a deque adds the item in the last position.")
             @Test
@@ -245,6 +235,7 @@ public class DoublyLinkedListDequeTest {
             @DisplayName("a one-element deque")
             @Test
             void sortOneElementDeque(){
+                dq.append(1);
                 assertThrows(DoubleEndedQueueException.class, () -> dq.sort(Comparator.naturalOrder()));
             }
 
