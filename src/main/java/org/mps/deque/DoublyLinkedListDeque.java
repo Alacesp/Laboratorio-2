@@ -1,14 +1,11 @@
 package org.mps.deque;
 
-<<<<<<< HEAD
+import java.util.Comparator;
+
 /**
  * @author Alvaro Acedo Espejo
  * @author Jose Torres Postigo
  */
-=======
-import java.util.Deque;
-
->>>>>>> b1d37d899afbf71d07d08c461fbc0c1d255b67b6
 public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     private DequeNode<T> first;
@@ -26,11 +23,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     public void prepend(T value) {
         // TODO
         if (value == null)
-<<<<<<< HEAD
             throw new DoubleEndedQueueException("You cannot store a null value.");
-=======
-            throw new DoubleEndedQueueException("No se puede almacenar un valor nulo.");
->>>>>>> b1d37d899afbf71d07d08c461fbc0c1d255b67b6
 
         DequeNode nodo;
 
@@ -50,30 +43,19 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     public void append(T value) {
         // TODO
         if (value == null)
-<<<<<<< HEAD
             throw new DoubleEndedQueueException("You cannot store a null value.");
 
         DequeNode nodo;
 
         // Si en la deque hay nodo(s)
-=======
-            throw new DoubleEndedQueueException("No se puede almacenar un valor nulo");
-
-        DequeNode nodo;
-
->>>>>>> b1d37d899afbf71d07d08c461fbc0c1d255b67b6
         if (last != null) {
             nodo = new DequeNode(value, last, null);
             last.setNext(nodo);
             last = nodo;
-<<<<<<< HEAD
         }
 
         // Si la deque esta vacia
         else {
-=======
-        } else {
->>>>>>> b1d37d899afbf71d07d08c461fbc0c1d255b67b6
             nodo = new DequeNode(value, null, null);
             first = last = nodo;
         }
@@ -84,11 +66,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     public void deleteFirst() {
         // TODO
         if (this.size() == 0)
-<<<<<<< HEAD
             throw new DoubleEndedQueueException("Deque is empty.");
-=======
-            throw new DoubleEndedQueueException("La deque esta vacia.");
->>>>>>> b1d37d899afbf71d07d08c461fbc0c1d255b67b6
 
         first = first.getNext();
 
@@ -104,11 +82,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     public void deleteLast() {
         // TODO
         if (this.size() == 0)
-<<<<<<< HEAD
             throw new DoubleEndedQueueException("Deque is empty.");
-=======
-            throw new DoubleEndedQueueException("La deque esta vacia.");
->>>>>>> b1d37d899afbf71d07d08c461fbc0c1d255b67b6
 
         last = last.getPrevious();
 
@@ -124,11 +98,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     public T first() {
         // TODO
         if (first == null)
-<<<<<<< HEAD
             throw new DoubleEndedQueueException("Deque is empty.");
-=======
-            throw new DoubleEndedQueueException("La deque esta vacia.");
->>>>>>> b1d37d899afbf71d07d08c461fbc0c1d255b67b6
 
         return first.getItem();
     }
@@ -137,11 +107,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     public T last() {
         // TODO
         if(last == null)
-<<<<<<< HEAD
             throw new DoubleEndedQueueException("Deque is empty.");
-=======
-            throw new DoubleEndedQueueException("La deque esta vacia.");
->>>>>>> b1d37d899afbf71d07d08c461fbc0c1d255b67b6
         return last.getItem();
     }
 
@@ -149,5 +115,85 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     public int size() {
         // TODO
         return size;
+    }
+
+    @Override
+    public T get(int index) {
+        if(index < 0 || index > this.size())
+            throw new IndexOutOfBoundsException("The index must be in the bounds of the deque");
+
+        DequeNode<T> aux = this.first;
+        int i = 0;
+
+        while(i != index){
+            aux = aux.getNext();
+            i++;
+        }
+
+        return aux.getItem();
+    }
+
+    @Override
+    public boolean contains(T value){
+        int i=0;
+        boolean f = false;
+        DequeNode<T> aux=first;
+        while(i<this.size() && !f){
+            if(aux.getItem()==value){
+                f = true;
+            }else{
+                aux = aux.getNext();
+                i++;
+            }
+        }
+        return f;
+    }
+
+    @Override
+    public void remove(T value){
+        int i=0;
+        boolean f = false;
+        DequeNode<T> aux=first;
+        DequeNode<T> previous;
+        while(i<this.size() && !f){
+            if(aux.getItem()==value){
+                previous = aux.getPrevious();
+                previous.setNext(aux.getNext());
+                aux.getNext().setPrevious(previous);
+                f = true;
+            }else{
+                aux = aux.getNext();
+                i++;
+            }
+        }
+    }
+
+    @Override
+    public void sort(Comparator<? super T> comparator) {
+        if (this.size() == 0)
+            throw new DoubleEndedQueueException("You cannot sort an empty deque.");
+        if(this.size() == 1)
+            throw new DoubleEndedQueueException("You cannot sort one-element deque.");
+
+        int i = 0;
+        DequeNode<T> current = this.first;
+
+        while (i < this.size()) {
+            T temp;
+            int j = i + 1;
+            DequeNode<T> next = current.getNext();
+
+            while(j<this.size()){
+                if(comparator.compare(current.getItem(), next.getItem()) < 0){
+                    temp = current.getItem();
+                    current.setItem(next.getItem());
+                    next.setItem(temp);
+                }
+                next = next.getNext();
+                j++;
+            }
+            current = current.getNext();
+            i++;
+        }
     }
 }

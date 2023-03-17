@@ -1,6 +1,10 @@
 package org.mps.deque;
 
 import org.junit.jupiter.api.*;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
@@ -221,6 +225,139 @@ public class DoublyLinkedListDequeTest {
                 int actualValue = dq.last();
 
                 assertEquals(expectedValue, actualValue);
+            }
+        }
+    }
+
+    @Nested
+    @DisplayName("Cases for the complex functions")
+    class methodsForComplexFunctions{
+        @DisplayName("Using get() ")
+        @Nested
+        class usingGet{
+            @DisplayName("throws an error for incorrect index (below 0)")
+            @Test
+            void incorrectValueInferiorToCeroGet(){
+                assertThrows(IndexOutOfBoundsException.class, ()-> dq.get(-1));
+            }
+
+            @DisplayName("throws an error for incorrect index (over size)")
+            @Test
+            void incorrectValueGreaterThanSizeGet(){
+                assertThrows(IndexOutOfBoundsException.class, ()-> dq.get(12));
+            }
+
+            @DisplayName("returns item for correct index")
+            @Test
+            void correctValueGet(){
+                Integer[] values = {1, 2, 3, 4, 5};
+
+                for (Integer value : values) {
+                    dq.append(value);
+                }
+
+                assertEquals(2, dq.get(1));
+            }
+        }
+        @DisplayName("Using contains()")
+        @Nested
+        class usingContains{
+            @DisplayName("returns true if the value is contained")
+            @Test
+            void theValueIsContained(){
+                Integer[] values = {1, 2, 3, 4, 5};
+
+                for (Integer value : values) {
+                    dq.append(value);
+                }
+                assertTrue(dq.contains(2));
+            }
+            @DisplayName("returns false if the value is not contained")
+            @Test
+            void theValueIsNotContained(){
+                Integer[] values = {1, 2, 3, 4, 5};
+
+                for (Integer value : values) {
+                    dq.append(value);
+                }
+                assertFalse(dq.contains(9));
+            }
+        }
+        @DisplayName("Using remove()")
+        @Nested
+        class usingRemove{
+            @DisplayName("makes the selected node dissapear")
+            @Test
+            void nodeIsDeleted(){
+                Integer[] valuesBefore = {1, 2, 3, 4, 5};
+                Integer[] valuesAfter = {1, 3, 4, 5};
+
+                for (Integer value : valuesBefore) {
+                    dq.append(value);
+                }
+
+                dq.remove(2);
+
+                for( Integer value : valuesAfter ){
+                    assertEquals(value, dq.first());
+                    dq.deleteFirst();
+                }
+
+            }
+            @DisplayName("The value is not in the list")
+            @Test
+            void theValueToRemoveIsNotFound(){
+                Integer[] valuesBefore = {1, 2, 3, 4, 5};
+                Integer[] valuesAfter = {1, 2, 3, 4, 5};
+
+                for (Integer value : valuesBefore) {
+                    dq.append(value);
+                }
+
+                dq.remove(9);
+
+                for( Integer value : valuesAfter ){
+                    assertEquals(value, dq.first());
+                    dq.deleteFirst();
+                }
+            }
+        }
+        @DisplayName("Sorting ")
+        @Nested
+        class sortMethod{
+            @DisplayName("an empty deque")
+            @Test
+            void sortEmptyDeque(){
+                assertThrows(DoubleEndedQueueException.class, () -> dq.sort(Comparator.naturalOrder()));
+            }
+
+            @DisplayName("a one-element deque")
+            @Test
+            void sortOneElementDeque(){
+                dq.append(1);
+                assertThrows(DoubleEndedQueueException.class, () -> dq.sort(Comparator.naturalOrder()));
+            }
+
+            @DisplayName("an ordinary deque")
+            @Test
+            void sortDeque(){
+                Integer[] inputs = {6, 33, 420, 69, 50};
+
+                for(Integer input : inputs){
+                    dq.append(input);
+                }
+
+                Arrays.sort(inputs);
+                dq.sort(Comparator.reverseOrder());
+
+                int i = 0;
+                while(i < dq.size()){
+                    Integer expectedValue = inputs[i];
+                    Integer actualValue = dq.get(i);
+                    assertEquals(expectedValue, actualValue);
+
+                    i++;
+                }
             }
         }
     }
