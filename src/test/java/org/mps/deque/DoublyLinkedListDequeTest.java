@@ -41,6 +41,21 @@ import static org.junit.jupiter.api.Assertions.*;
         Get last node value
             13. in a empty Deque -> Throws exception
             14. in a Deque returns the last value
+   Cases for the complex functions
+        Using get()
+            15. with incorrect index (below 0) -> Thows exception
+            16. with incorrect index (over size) -> Thows exception
+            17. with correct value -> returns item
+        Using contains()
+            18. if the value is contained -> returns true
+            19. if the value is not contained -> returns false
+        Using remove()
+            20. if the value is in the list -> the node dissapears
+            21. if the value is not in the list -> nothing happens
+        Using sort()
+            22. with an empty list -> Throws exception
+            21. with a one-node deque -> returns the deque
+            22. with an ordinary deque -> returns the deque in order
 
 */
 
@@ -322,23 +337,23 @@ public class DoublyLinkedListDequeTest {
                 }
             }
         }
-        @DisplayName("Sorting ")
+        @DisplayName("Using sort()")
         @Nested
-        class sortMethod{
-            @DisplayName("an empty deque")
+        class usingSort{
+            @DisplayName("with an empty deque")
             @Test
             void sortEmptyDeque(){
                 assertThrows(DoubleEndedQueueException.class, () -> dq.sort(Comparator.naturalOrder()));
             }
 
-            @DisplayName("a one-element deque")
+            @DisplayName("with a one-element deque")
             @Test
             void sortOneElementDeque(){
                 dq.append(1);
                 assertThrows(DoubleEndedQueueException.class, () -> dq.sort(Comparator.naturalOrder()));
             }
 
-            @DisplayName("an ordinary deque")
+            @DisplayName("with an ordinary deque")
             @Test
             void sortDeque(){
                 Integer[] inputs = {6, 33, 420, 69, 50};
